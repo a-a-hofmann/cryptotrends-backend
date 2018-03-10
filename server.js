@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.SERVER_PORT;
 
 // init database
-MongoClient.connect(process.env.DB_URL, (err, database) => {
+MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
 
     if (err) return console.log(err);
 
