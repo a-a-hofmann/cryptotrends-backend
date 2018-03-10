@@ -4,7 +4,7 @@ const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const app = express();
 
-const port = process.env.SERVER_PORT;
+const port = process.env.PORT || 8000;
 
 // init database
 MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
@@ -19,6 +19,6 @@ MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
 
     // start server
     app.listen(port, () => {
-        console.log('Started Server at port' + port);
+        console.log('Started Server at port: ' + port);
     });
 });
