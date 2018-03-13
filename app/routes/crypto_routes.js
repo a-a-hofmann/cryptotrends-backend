@@ -12,12 +12,4 @@ module.exports = function (app, db) {
         });
 
     });
-
-    // Uses google's NLP API and returns the results to the user
-    app.post('/sentiments', (req, res) => {
-        const textRecord = req.body.text;
-        services.sentimentAnalysis(app, textRecord).then(results => {
-            res.send(results);
-        });
-    });
 };
