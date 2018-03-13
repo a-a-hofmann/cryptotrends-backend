@@ -30,3 +30,6 @@ benchmarks/graphs
 
 # Config
 .env
+
+# Google API key
+google_nlp_key.json

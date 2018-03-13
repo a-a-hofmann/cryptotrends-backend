@@ -14,6 +14,17 @@
 
 Adjust .env parameters according to your local installation of MongoDB.
 
+### Google NLP API
+In order to use the API a token is necessary. The token is in the `google_nlp_key.json.aes` file, which is encrypted. 
+The key for decryption can be found in slack in the backend channel as a pinned message.
+With the key you can decrypt the file (in Unix systems):
+
+`openssl aes256 -d -in google_nlp_key.json.aes -out google_nlp_key.json`
+
+Make sure the .env file has the following property and that the path to the `.json` file is correct (an example of this can be found in the `.env.dist` file:
+
+`GOOGLE_APPLICATION_CREDENTIALS=google_nlp_key.json`
+
 ## Running the application
 
 ``` npm run dev```

@@ -1,4 +1,5 @@
 // routes/crypto_routes.js
+const services = require('../services');
 
 module.exports = function (app, db) {
 
@@ -10,5 +11,13 @@ module.exports = function (app, db) {
             res.send(result);
         });
 
+    });
+
+    // Uses google's NLP API and returns the results to the user
+    app.post('/sentiment', (req, res) => {
+        const textRecord = req.body.text;
+        services.sentimentAnalysis(app, textRecord).then(results => {
+            res.send(results);
+        });
     });
 };
