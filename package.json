@@ -19,7 +19,8 @@
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "mongodb": "^2.2.35",
-    "npm": "^5.7.1"
+    "npm": "^5.7.1",
+    "twit": "^2.2.9"
   },
   "devDependencies": {
     "nodemon": "^1.17.1"

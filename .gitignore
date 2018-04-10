@@ -33,3 +33,4 @@ benchmarks/graphs
 
 # Google API key
 google_nlp_key.json
+twitter_key.json

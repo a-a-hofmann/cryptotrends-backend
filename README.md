@@ -21,9 +21,25 @@ With the key you can decrypt the file (in Unix systems):
 
 `openssl aes256 -d -in google_nlp_key.json.aes -out google_nlp_key.json`
 
+Same goes for the twitter api keys:
+
+`openssl aes256 -d -in twitter_key.json.aes -out twitter_key.json`
+
 Make sure the .env file has the following property and that the path to the `.json` file is correct (an example of this can be found in the `.env.dist` file:
 
 `GOOGLE_APPLICATION_CREDENTIALS=google_nlp_key.json`
+
+## MongoDB setup
+
+Starting the database:
+`mongod`
+
+Creating the database with the required collections:
+
+```mongo```
+```use crypto-trends```
+```db.createCollection('cryptos')```
+```db.createCollection('raw_twits')```
 
 ## Running the application
 
