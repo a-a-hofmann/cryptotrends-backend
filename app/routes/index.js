@@ -1,5 +1,5 @@
 const cryptoRoutes = require('./crypto_routes');
-const rawTwitsRoutes = require('./raw_twits_routes');
+const rawTwitsRoutes = require('./tweet_routes');
 const devRoutes = require('./dev_routes');
 
 module.exports = function (app, db) {

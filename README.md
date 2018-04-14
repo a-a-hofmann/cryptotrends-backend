@@ -39,7 +39,7 @@ Creating the database with the required collections:
 ```mongo```
 ```use crypto-trends```
 ```db.createCollection('cryptos')```
-```db.createCollection('raw_twits')```
+```db.createCollection('tweets')```
 
 ## Running the application
 
