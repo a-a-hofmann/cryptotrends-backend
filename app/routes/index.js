@@ -6,6 +6,6 @@ const devRoutes = require('./dev_routes');
 module.exports = function (app, db) {
     cryptoRoutes(app, db);
     rawTwitsRoutes(app, db);
-    devRoutes(app);
+    devRoutes(app, db);
     // Other route groups could go here, in the future
 };
