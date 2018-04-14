@@ -22,7 +22,6 @@ module.exports = function (db) {
 
                 console.log('CRYPTO CRON::FETCHING CRYPTOS');
                 https.request(options, function (res) {
-
                     let data = '';
                     res.setEncoding('utf8');
                     res.on('data', function (chunk) {
