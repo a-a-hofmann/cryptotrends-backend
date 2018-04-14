@@ -17,7 +17,7 @@ MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
     require('./app/routes')(app, database);
 
     // init crons
-    require('./app/crons')(app, database);
+    require('./app/crons')(database);
 
     // start server
     app.listen(port, () => {

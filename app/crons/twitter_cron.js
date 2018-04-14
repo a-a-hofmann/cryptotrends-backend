@@ -1,7 +1,7 @@
 const CronJob = require('cron').CronJob;
 const { fetchTweets } = require('../services');
 
-module.exports = function (app, db) {
+module.exports = function (db) {
     new CronJob('* * 0 * *', function () {
         console.log('TWITTER CRON::STARTED');
         fetchTweets(db);

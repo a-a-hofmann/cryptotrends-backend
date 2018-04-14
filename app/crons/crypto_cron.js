@@ -2,7 +2,7 @@ const CronJob = require('cron').CronJob;
 const https = require('https');
 const COIN_MARKET_CAP_API_ENDPOINT = 'api.coinmarketcap.com';
 
-module.exports = function (app, db) {
+module.exports = function (db) {
     let cryptoCollection = db.collection('cryptos');
 
     new CronJob('*/1 * * * *', function () {
