@@ -1,4 +1,3 @@
-// routes/index.js
 const cryptoCron = require('./crypto_cron');
 const twitterCron = require('./twitter_cron');
 

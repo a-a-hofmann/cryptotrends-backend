@@ -1,22 +1,18 @@
-// cron/crypto_cron.js
-
 const CronJob = require('cron').CronJob;
 const https = require('https');
-const COIN_CAP_MARKET_API_ENDPOINT = "api.coinmarketcap.com";
+const COIN_CAP_MARKET_API_ENDPOINT = 'api.coinmarketcap.com';
 
 module.exports = function (app, db) {
-
     let cryptoCollection = db.collection('cryptos');
 
     new CronJob('*/1 * * * *', function () {
+        console.log('CRYPTO CRON::STARTED');
 
-        console.log("CRYPTO CRON::STARTED");
-
-        console.log("CRYPTO CRON::DROPPING COLLECTION");
+        console.log('CRYPTO CRON::DROPPING COLLECTION');
         cryptoCollection.drop(function (err, delOK) {
             if (err) throw err;
             if (delOK) {
-                console.log("CRYPTO CRON::COLLECTION DROPPED");
+                console.log('CRYPTO CRON::COLLECTION DROPPED');
 
                 const options = {
                     host: COIN_CAP_MARKET_API_ENDPOINT,
@@ -24,10 +20,10 @@ module.exports = function (app, db) {
                     method: 'GET'
                 };
 
-                console.log("CRYPTO CRON::FETCHING CRYPTOS");
+                console.log('CRYPTO CRON::FETCHING CRYPTOS');
                 https.request(options, function (res) {
 
-                    let data = "";
+                    let data = '';
                     res.setEncoding('utf8');
                     res.on('data', function (chunk) {
                         data += chunk;
@@ -35,14 +31,13 @@ module.exports = function (app, db) {
                     res.on('end', function () {
                         let objs = JSON.parse(data);
                         cryptoCollection.insertMany(objs);
-                        console.log("CRYPTO CRON::INSERTING CRYPTOS");
+                        console.log('CRYPTO CRON::INSERTING CRYPTOS');
                     });
                 }).end(function () {
-                    console.log("CRYPTO CRON::DONE");
+                    console.log('CRYPTO CRON::DONE');
                 });
 
             }
         });
     }, null, true, 'Europe/Zurich');
-
 };

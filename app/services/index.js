@@ -1,4 +1,3 @@
-// services/index.js
 const sentimentService = require('./sentiment_service');
 const twitterService = require('./twitter_service');
 

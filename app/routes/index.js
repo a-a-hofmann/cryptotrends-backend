@@ -1,4 +1,3 @@
-// routes/index.js
 const cryptoRoutes = require('./crypto_routes');
 const rawTwitsRoutes = require('./raw_twits_routes');
 const devRoutes = require('./dev_routes');
