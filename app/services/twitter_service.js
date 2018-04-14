@@ -13,7 +13,25 @@ module.exports = {
             count: 999999,
             language: 'en'
         }, function (err, data, res) {
-            tweetCollection.insertMany(data.statuses);
+            // prune statuses: only keep fields required for analysis
+            const statuses = data.statuses.map((
+                {
+                    text,
+                    retweet_count,
+                    favorite_count,
+                    user: {
+                        followers_count,
+                        friends_count
+                    }
+                }) => ({
+                    text,
+                    retweet_count,
+                    favorite_count,
+                    followers_count,
+                    friends_count
+                })
+            );
+            tweetCollection.insertMany(statuses);
             console.log('TWITTER SERVICE::INSERTED');
         });
     }
