@@ -1,6 +1,6 @@
 const CronJob = require('cron').CronJob;
 const https = require('https');
-const COIN_CAP_MARKET_API_ENDPOINT = 'api.coinmarketcap.com';
+const COIN_MARKET_CAP_API_ENDPOINT = 'api.coinmarketcap.com';
 
 module.exports = function (app, db) {
     let cryptoCollection = db.collection('cryptos');
@@ -15,7 +15,7 @@ module.exports = function (app, db) {
                 console.log('CRYPTO CRON::COLLECTION DROPPED');
 
                 const options = {
-                    host: COIN_CAP_MARKET_API_ENDPOINT,
+                    host: COIN_MARKET_CAP_API_ENDPOINT,
                     path: '/v1/ticker/',
                     method: 'GET'
                 };
