@@ -3,7 +3,7 @@ const language = require('@google-cloud/language');
 const client = new language.LanguageServiceClient();
 
 const self = module.exports = {
-    analyze: (app, textRecord) => {
+    analyze: (textRecord) => {
     
         const document = {
             content: textRecord,
@@ -34,8 +34,8 @@ const self = module.exports = {
                 console.error('ERROR:', err);
             });
     },
-    simpleAnalysis: (app, textRecord) => {
-        return self.analyze(app, textRecord).then(result => {
+    simpleAnalysis: (textRecord) => {
+        return self.analyze(textRecord).then(result => {
             const googleScore = result.documentSentiment.score;
             const score = 4 * (googleScore + 1) / 2 + 1;
             return score;

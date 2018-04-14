@@ -12,7 +12,7 @@ module.exports = function (app, db) {
         // should hide this in production to avoid users abusing this.
         app.post('/sentiments', (req, res) => {
             const textRecord = req.body.text;
-            services.simpleAnalysis(app, textRecord).then(results => {
+            services.simpleAnalysis(textRecord).then(results => {
                 res.send({result: results});
             });
         });
