@@ -14,8 +14,8 @@ module.exports = {
             language: 'en'
         }, function (err, data, res) {
             // prune statuses: only keep fields required for analysis
-            const statuses = data.statuses.map((
-                {
+            const statuses = data.statuses.map(
+                ({
                     text,
                     retweet_count,
                     favorite_count,
@@ -27,12 +27,28 @@ module.exports = {
                     text,
                     retweet_count,
                     favorite_count,
-                    followers_count,
-                    friends_count
+                    user: {
+                        followers_count,
+                        friends_count
+                    },
+                    relevance: calculateRelevance(
+                        retweet_count,
+                        favorite_count,
+                        followers_count,
+                        friends_count
+                    )
                 })
             );
+            console.log(statuses);
             tweetCollection.insertMany(statuses);
             console.log('TWITTER SERVICE::INSERTED');
         });
     }
 };
+
+const calculateRelevance = (
+    retweet_count,
+    favorite_count,
+    followers_count,
+    friends_count
+) => (0.25 * (retweet_count + favorite_count + followers_count + friends_count));
