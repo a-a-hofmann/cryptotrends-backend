@@ -39,7 +39,6 @@ module.exports = {
                     )
                 })
             );
-            console.log(statuses);
             tweetCollection.insertMany(statuses);
             console.log('TWITTER SERVICE::INSERTED');
         });
