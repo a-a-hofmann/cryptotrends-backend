@@ -25,9 +25,10 @@ Same goes for the twitter api keys:
 
 `openssl aes256 -d -in twitter_key.json.aes -out twitter_key.json`
 
-Make sure the .env file has the following property and that the path to the `.json` file is correct (an example of this can be found in the `.env.dist` file:
+Make sure the .env file has the following properties and that the path to the `.json` file is correct (an example of this can be found in the `.env.dist` file:
 
 `GOOGLE_APPLICATION_CREDENTIALS=google_nlp_key.json`
+`TWITTER_APPLICATION_CREDENTIALS=twitter_key.json`
 
 ## MongoDB setup
 
