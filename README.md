@@ -28,6 +28,7 @@ Same goes for the twitter api keys:
 Make sure the .env file has the following properties and that the path to the `.json` file is correct (an example of this can be found in the `.env.dist` file:
 
 `GOOGLE_APPLICATION_CREDENTIALS=google_nlp_key.json`
+
 `TWITTER_APPLICATION_CREDENTIALS=twitter_key.json`
 
 ## MongoDB setup
@@ -38,8 +39,11 @@ Starting the database:
 Creating the database with the required collections:
 
 ```mongo```
+
 ```use crypto-trends```
+
 ```db.createCollection('cryptos')```
+
 ```db.createCollection('tweets')```
 
 ## Running the application
