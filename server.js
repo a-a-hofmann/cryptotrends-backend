@@ -22,8 +22,10 @@ MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
     // init crons
     require('./app/crons')(database);
 
-    // start server
-    app.listen(port, () => {
-        console.log('Started Server at port: ' + port);
-    });
+    database.collection('historical').drop((error, delOk) => {
+        // start server
+        app.listen(port, () => {
+            console.log('Started Server at port: ' + port);
+        });
+    })
 });
