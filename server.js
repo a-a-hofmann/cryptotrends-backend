@@ -4,10 +4,13 @@ const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const app = express();
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const port = process.env.PORT || 8000;
 
 app.use(bodyParser.json());
+
+app.use(cors());
 
 // init database
 MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
