@@ -6,5 +6,6 @@ module.exports = {
     sentimentAnalysis: (text) => sentimentService.analyze(text),
     simpleAnalysis: (text) => sentimentService.simpleAnalysis(text),
     fetchTweets: (db) => twitterService.fetchTweets(db),
-    fetchHistoricalData: (db) => gdaxService.fetchHistoricalData(db)
+    fetchHistoricalData: (db) => gdaxService.fetchHistoricalData(db),
+    getHistoricalTimeseries: (db) => gdaxService.getHistoricalTimeseries(db)
 };
