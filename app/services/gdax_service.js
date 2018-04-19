@@ -23,6 +23,10 @@ function on (promise) {
         .catch(error =>  [error]);
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
 module.exports = {
     async fetchHistoricalData(db) {
         const today = moment(new Date());
@@ -46,6 +50,9 @@ module.exports = {
                 throw err;
             }
             historicalDataUpTo300DaysAgo = historicalDataUpTo300DaysAgo.map(dataPoint => new Candle(symbol, dataPoint));
+
+            console.log(chalk.cyan('Throttling requests...'));
+            await sleep(333);
 
             [err, historicalData300To600DaysAgo] = await on(fetchDailyRateForSymbol(symbol, sixHundredDaysAgo.toISOString(), threeHundredDaysAgo.toISOString()));
             if (err) {
