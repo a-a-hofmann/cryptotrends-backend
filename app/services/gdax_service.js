@@ -69,6 +69,7 @@ module.exports = {
                     if (err) console.log(chalk.red(err));;
                 });
             }
+            await sleep(333);
         }
     }
 }
