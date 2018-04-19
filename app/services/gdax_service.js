@@ -61,7 +61,7 @@ module.exports = {
                 throw err;
             }
 
-            historicalData300To600DaysAgo = historicalDataUpTo300DaysAgo.map(dataPoint => new Candle(symbol, dataPoint));
+            historicalData300To600DaysAgo = historicalData300To600DaysAgo.map(dataPoint => new Candle(symbol, dataPoint));
             
             const historicalData = historicalDataUpTo300DaysAgo;
             historicalData.push(...historicalData300To600DaysAgo);
