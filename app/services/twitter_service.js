@@ -16,6 +16,7 @@ module.exports = {
             // prune statuses: only keep fields required for analysis
             const statuses = data.statuses.map(
                 ({
+                    created_at,
                     text,
                     retweet_count,
                     favorite_count,
@@ -24,6 +25,7 @@ module.exports = {
                         friends_count
                     }
                 }) => ({
+                    created_at,
                     text,
                     retweet_count,
                     favorite_count,
