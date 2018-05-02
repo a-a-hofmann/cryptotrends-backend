@@ -1,3 +1,4 @@
+const { simpleAnalysis } = require('./sentiment_service');
 const Twit = require('twit');
 const TWITTER_KEY = require(process.cwd() + '/' + process.env.TWITTER_APPLICATION_CREDENTIALS);
 
@@ -12,9 +13,8 @@ module.exports = {
             q: '#crypto since:' + today,
             count: 999999,
             language: 'en'
-        }, function (err, data, res) {
-            // prune statuses: only keep fields required for analysis
-            const statuses = data.statuses.map(
+        }, async function (err, data, res) {
+            let statuses = data.statuses.map(
                 ({
                     created_at,
                     text,
@@ -41,6 +41,9 @@ module.exports = {
                     )
                 })
             );
+            let scores = statuses.map(({ text }) => simpleAnalysis(text));
+            scores = await Promise.all(scores);
+            statuses = statuses.map(({ ...props }, i) => ({ ...props, score: scores[i] }));
             tweetCollection.insertMany(statuses);
             console.log('TWITTER SERVICE::INSERTED');
         });
