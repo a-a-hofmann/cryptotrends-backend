@@ -27,6 +27,7 @@ module.exports = {
                             friends_count
                         }
                     }) => ({
+                        tag,
                         created_at,
                         text,
                         retweet_count,
