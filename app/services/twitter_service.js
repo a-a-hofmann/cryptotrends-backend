@@ -1,6 +1,6 @@
-const { simpleAnalysis } = require('./sentiment_service');
 const Twit = require('twit');
 const TWITTER_KEY = require(process.cwd() + '/' + process.env.TWITTER_APPLICATION_CREDENTIALS);
+const { simpleAnalysis } = require('./sentiment_service');
 
 const TwitClient = new Twit(TWITTER_KEY);
 
