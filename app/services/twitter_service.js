@@ -44,6 +44,7 @@ module.exports = {
                         )
                     })
                 );
+                // TODO: here we run into a rate limit of nl api
                 let scores = statuses.map(({ text }) => simpleAnalysis(text));
                 scores = await Promise.all(scores);
                 statuses = statuses.map(({ ...props }, i) => ({ ...props, score: scores[i] }));
