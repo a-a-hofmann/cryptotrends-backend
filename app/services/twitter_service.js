@@ -50,7 +50,6 @@ module.exports = {
                     scores = await Promise.all(scores);
                     statuses = statuses.map(({...props}, i) => ({...props, score: scores[i]}));
                     tweetCollection.insertMany(statuses);
-                    console.log(statuses);
                     console.log('TWITTER SERVICE::INSERTED');
                 });
             });
