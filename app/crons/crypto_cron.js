@@ -10,7 +10,6 @@ module.exports = function (db) {
 
         console.log('CRYPTO CRON::DROPPING COLLECTION');
         cryptoCollection.drop(function (err, delOK) {
-            if (err) throw err;
             if (delOK) {
                 console.log('CRYPTO CRON::COLLECTION DROPPED');
 

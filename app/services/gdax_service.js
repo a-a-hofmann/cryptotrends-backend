@@ -78,9 +78,7 @@ module.exports = {
         for (let i = 0; i < SYMBOLS.length; i++) {
             const symbol = SYMBOLS[i];
 
-            db.collection('cryptos').find({})
-
-            timeseries.push(db.collection('historical').find({symbol: symbol}).toArray());
+            timeseries.push(db.collection('historical').find({symbol}).toArray());
         }
 
         return Promise.all(timeseries);

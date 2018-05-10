@@ -8,3 +8,4 @@ module.exports.TAGS = {
     'LTC': ['LTC', 'Litecoin'],
     'BCH': ['BCH', 'BitcoinCash']
 };
+module.exports.TWEET_LENGTH_THRESHOLD = 5;
