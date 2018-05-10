@@ -26,7 +26,10 @@ module.exports = {
                              user: {
                                  followers_count,
                                  friends_count
-                             }
+                             },
+                            entities: {
+                                 hashtags
+                            }
                          }) => ({
                             symbol,
                             id,
@@ -38,6 +41,7 @@ module.exports = {
                                 followers_count,
                                 friends_count
                             },
+                            num_hashtags: hashtags.length,
                             relevance: calculateRelevance(
                                 retweet_count,
                                 favorite_count,
