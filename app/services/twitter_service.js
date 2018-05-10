@@ -10,46 +10,49 @@ module.exports = {
         const tweetCollection = db.collection('tweets');
         const today = new Date().toISOString().slice(0, 10);
 
-        TAGS.forEach((tag) => {
-            TwitClient.get('search/tweets', {
-                q: `#${tag} since:${today}`,
-                count: 999999,
-                language: 'en'
-            }, async function (err, data, res) {
-                let statuses = data.statuses.map(
-                    ({
-                        created_at,
-                        text,
-                        retweet_count,
-                        favorite_count,
-                        user: {
-                            followers_count,
-                            friends_count
-                        }
-                    }) => ({
-                        tag,
-                        created_at,
-                        text,
-                        retweet_count,
-                        favorite_count,
-                        user: {
-                            followers_count,
-                            friends_count
-                        },
-                        relevance: calculateRelevance(
+        Object.keys(TAGS).forEach((symbol) => {
+            TAGS[symbol].forEach((tag) => {
+                TwitClient.get('search/tweets', {
+                    q: `#${tag} since:${today}`,
+                    count: 999999,
+                    language: 'en'
+                }, async function (err, data, res) {
+                    let statuses = data.statuses.map(
+                        ({
+                             created_at,
+                             text,
+                             retweet_count,
+                             favorite_count,
+                             user: {
+                                 followers_count,
+                                 friends_count
+                             }
+                         }) => ({
+                            symbol,
+                            created_at,
+                            text,
                             retweet_count,
                             favorite_count,
-                            followers_count,
-                            friends_count
-                        )
-                    })
-                );
-                // TODO: here we run into a rate limit of nl api
-                let scores = statuses.map(({ text }) => simpleAnalysis(text));
-                scores = await Promise.all(scores);
-                statuses = statuses.map(({ ...props }, i) => ({ ...props, score: scores[i] }));
-                tweetCollection.insertMany(statuses);
-                console.log('TWITTER SERVICE::INSERTED');
+                            user: {
+                                followers_count,
+                                friends_count
+                            },
+                            relevance: calculateRelevance(
+                                retweet_count,
+                                favorite_count,
+                                followers_count,
+                                friends_count
+                            )
+                        })
+                    );
+                    // TODO: here we run into a rate limit of nl api
+                    let scores = statuses.map(({text}) => simpleAnalysis(text));
+                    scores = await Promise.all(scores);
+                    statuses = statuses.map(({...props}, i) => ({...props, score: scores[i]}));
+                    tweetCollection.insertMany(statuses);
+                    console.log(statuses);
+                    console.log('TWITTER SERVICE::INSERTED');
+                });
             });
         });
     }
