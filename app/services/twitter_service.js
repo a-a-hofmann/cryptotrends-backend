@@ -1,6 +1,5 @@
 const Twit = require('twit');
 const TWITTER_KEY = require(process.cwd() + '/' + process.env.TWITTER_APPLICATION_CREDENTIALS);
-const { simpleAnalysis } = require('./sentiment_service');
 const { TAGS } = require('../utils/Constants');
 
 const TwitClient = new Twit(TWITTER_KEY);
@@ -19,6 +18,7 @@ module.exports = {
                 }, async function (err, data, res) {
                     let statuses = data.statuses.map(
                         ({
+                             id,
                              created_at,
                              text,
                              retweet_count,
@@ -29,6 +29,7 @@ module.exports = {
                              }
                          }) => ({
                             symbol,
+                            id,
                             created_at,
                             text,
                             retweet_count,
@@ -45,10 +46,6 @@ module.exports = {
                             )
                         })
                     );
-                    // TODO: here we run into a rate limit of nl api
-                    let scores = statuses.map(({text}) => simpleAnalysis(text));
-                    scores = await Promise.all(scores);
-                    statuses = statuses.map(({...props}, i) => ({...props, score: scores[i]}));
                     tweetCollection.insertMany(statuses);
                     console.log('TWITTER SERVICE::INSERTED');
                 });
