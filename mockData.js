@@ -46,3 +46,4 @@ MongoClient.connect('mongodb://localhost:27017/crypto-trends', (err, database) =
 });
 
 console.log("Done");
+process.exit();
