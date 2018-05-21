@@ -28,6 +28,7 @@ for (let i = 0; i < 28; i++) {
 MongoClient.connect('mongodb://localhost:27017/crypto-trends', (err, database) => {
 	if (err) throw err;
 
+	promises = [];
 	dates.forEach(date => {
 
 		const data = [];
@@ -41,9 +42,11 @@ MongoClient.connect('mongodb://localhost:27017/crypto-trends', (err, database) =
 			})
 		});
 
-		database.collection('sentiment_score').insertMany(data)
+		promises.push(database.collection('sentiment_score').insertMany(data))
 	});
-});
 
-console.log("Done");
-process.exit();
+	Promise.all(promises).then(res => {
+		console.log("Done");
+		process.exit()
+	})
+});
