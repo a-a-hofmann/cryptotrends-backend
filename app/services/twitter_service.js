@@ -3,7 +3,7 @@ const TWITTER_KEY = require(process.cwd() + '/' + process.env.TWITTER_APPLICATIO
 const { TAGS, TWEET_LENGTH_THRESHOLD } = require('../utils/Constants');
 const { analyze } = require('./sentiment_service');
 const chalk = require('chalk');
-const math = require('mathjs');
+const moment = require('moment');
 
 const TwitClient = new Twit(TWITTER_KEY);
 
@@ -72,51 +72,25 @@ module.exports = {
                 const tweetBlob = tweetsForSymbol.map(tweet => tweet.text).reduce((tweet1, tweet2) => tweet1 + '\n' + tweet2);
                 console.log("Starting analysis for symbol: " + symbol);
                 console.log("Analyzing " + tweetsForSymbol.length + " tweets.\n" + tweetBlob.length / 1000 + " text records.");
-                const analysisResult = await on(analyzeTweet(tweetBlob));
-                console.log(analysisResult);
-                analyze(tweetBlob).then(result => {
-                    const scores = result.sentences
-                        .map(sentence => sentence.sentiment.score)
-                        .filter(score => notAlmostZero(score));
-
-                    if (scores.length === 0) {
-                        console.log(chalk.red("Empty array for symbol: " + symbol));
-                    } else {
-
-                    
-                    
-                    const norm = Math.sqrt(scores.reduce((accumulator, score) => accumulator + score**2, 0));
-                    const normalizedScores = scores.map(score => score / norm);
-
-                    const median = math.median(normalizedScores);
-                    const mean = math.mean(normalizedScores);
-                    const max = math.max(normalizedScores);
-                    const min = math.min(normalizedScores);
-
-                    console.log(chalk.cyan("Symbol: " + symbol));
-                    console.log(chalk.yellow("Median: " + median));
-                    console.log(chalk.yellow("Average: " + mean));
-                    console.log(chalk.yellow("Max: " + max));
-                    console.log(chalk.yellow("Min: " + min));
-                    console.log("\n----------------\n")
-
+                const analysisResult = await on(analyze(tweetBlob).then(result => {
+                    return {
+                        ...result.documentSentiment,
+                        symbol,
+                        numberOfTweets: tweetsForSymbol.length,
+                        date: today()
                     }
-                });
+                }));
 
+                const sentimentScoreCollection = db.collection('sentiment_score');
+                sentimentScoreCollection.insert(analysisResult);
+                console.log('TWITTER SERVICE SENTIMENT SCORE::INSERTED');
 
             }).catch(error => console.log(chalk.red(error)));
         });
     }
 };
 
-const notAlmostZero = (value) => {
-    const epsilon = 0.0001;
-    return Math.abs(value) > epsilon;
-}
-
-const flatten = list => list.reduce(
-    (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
-);
+const today = () => moment().format('YYYY-MM-DD');
 
 const calculateRelevance = (
     retweet_count,
@@ -133,36 +107,9 @@ const filterTweet = (tweet) => {
 // syntactic sugar to await on promises.
 function on (promise) {
     return promise
-        .then(result => [null, result])
-        .catch(error =>  [error]);
-}
-
-function analyzeTweet(tweetBlob) {
-    return analyze(tweetBlob).then(result => {
-        const scores = result.sentences
-            .map(sentence => sentence.sentiment.score)
-            .filter(score => score === 0);
-
-        if (scores.length === 0) {
-            console.log(chalk.red("Empty array for symbol: " + symbol));
-        } else {
-
-        
-        
-        const norm = Math.sqrt(scores.reduce((accumulator, score) => accumulator + score**2, 0));
-        const normalizedScores = scores.map(score => score / norm);
-
-        const median = math.median(normalizedScores);
-        const mean = math.mean(normalizedScores);
-        const max = math.max(normalizedScores);
-        const min = math.min(normalizedScores);
-
-        console.log(chalk.cyan("Symbol: " + symbol));
-        console.log(chalk.yellow("Median: " + median));
-        console.log(chalk.yellow("Average: " + mean));
-        console.log(chalk.yellow("Max: " + max));
-        console.log(chalk.yellow("Min: " + min));
-        console.log("\n----------------\n")
-        }
-    });
+        .then(result => result)
+        .catch(error =>  {
+            console.log(chalk.red(error));
+            return [error]
+        });
 }

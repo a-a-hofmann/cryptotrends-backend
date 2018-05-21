@@ -49,4 +49,15 @@ module.exports = function (app, db) {
             res.send(response);
         });
     });
+
+    app.post('/scores', (req, res) => {
+        const date = req.body.date;
+        const symbol = req.body.symbol;
+
+        db.collection('sentiment_score').find({date, symbol}).toArray(function (err, result) {
+            if (err) throw err;
+            res.contentType('application/json');
+            res.send(result);
+        });
+    })
 }
