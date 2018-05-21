@@ -1,6 +1,5 @@
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
+const moment = require('moment');
+const MongoClient = require('mongodb').MongoClient;
 
 function randomMagnitude() {
 	return getRandomArbitrary(0, 200);
@@ -14,10 +13,7 @@ function getRandomScore() {
 	return getRandomArbitrary(-1, 1);
 }
 
-const symbols = ['BTC', 'ETH', 'LTC', 'BCH']
-
-const moment = require('moment');
-const MongoClient = require('mongodb').MongoClient;
+const symbols = ['BTC', 'ETH', 'LTC', 'BCH'];
 
 const dates = [];
 for (let i = 0; i < 28; i++) {
@@ -25,7 +21,7 @@ for (let i = 0; i < 28; i++) {
 	dates.push(dateFrom);
 }
 
-MongoClient.connect('mongodb://localhost:27017/crypto-trends', (err, database) => {
+MongoClient.connect('mongodb://localhost:27017/crypto-trends', (err, db) => {
 	if (err) throw err;
 
 	promises = [];
@@ -42,7 +38,7 @@ MongoClient.connect('mongodb://localhost:27017/crypto-trends', (err, database) =
 			})
 		});
 
-		promises.push(database.collection('sentiment_score').insertMany(data))
+		promises.push(db.collection('sentiment_score').insertMany(data))
 	});
 
 	Promise.all(promises).then(res => {
