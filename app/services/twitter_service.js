@@ -23,7 +23,7 @@ module.exports = {
                     .then(result => {
                         const data = result.data;
                         let statuses = data.statuses
-                            .map((tweet) => mapTweet(tweet))
+                            .map((tweet) => mapTweet(tweet, symbol))
                             .filter(tweet => filterTweet(tweet));
                         tweetCollection.insertMany(statuses);
                         console.log('TWITTER SERVICE::INSERTED');
@@ -86,7 +86,8 @@ const mapTweet = ({
                       },
                       entities: {
                           hashtags
-                      }
+                      },
+                      symbol
                   }) => ({
     symbol,
     id,
