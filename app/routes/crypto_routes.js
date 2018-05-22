@@ -51,12 +51,30 @@ module.exports = function (app, db) {
     });
 
     app.post('/scores', (req, res) => {
-        const date = req.body.date;
-        const symbol = req.body.symbol;
-
-        db.collection('sentiment_score').find({date, symbol}).toArray(function (err, result) {
+        const body = req.body;
+        const date = moment(body.date).toDate();
+        const from = moment(body.from).toDate();
+        const to = moment(body.to).toDate();
+        const symbol = body.symbol;
+    
+        // Find by either date or by range.
+        db.collection('sentiment_score').find({ 
+            symbol,
+            $or: [ 
+                {
+                    $and: [ {'date': {$lte: to}}, {'date' : {$gte: from}}]
+                }, 
+                {
+                    date
+                }
+            ],
+        }).toArray(function (err, result) {
             if (err) throw err;
             res.contentType('application/json');
+
+            result.sort((a, b) => {
+                return b.date - a.date;
+            })
             res.send(result);
         });
     })

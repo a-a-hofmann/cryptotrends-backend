@@ -21,7 +21,7 @@ const MongoClient = require('mongodb').MongoClient;
 
 const dates = [];
 for (let i = 0; i < 28; i++) {
-	const dateFrom = moment().subtract(i, 'd').format('YYYY-MM-DD');	
+	const dateFrom = moment(moment().subtract(i, 'd').format('YYYY-MM-DD')).toDate();	
 	dates.push(dateFrom);
 }
 

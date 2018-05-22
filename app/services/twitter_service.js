@@ -77,9 +77,11 @@ module.exports = {
                         ...result.documentSentiment,
                         symbol,
                         numberOfTweets: tweetsForSymbol.length,
-                        date: today()
+                        date: getTodayTime()
                     }
                 }));
+
+                console.log(analysisResult);
 
                 const sentimentScoreCollection = db.collection('sentiment_score');
                 sentimentScoreCollection.insert(analysisResult);
@@ -90,7 +92,9 @@ module.exports = {
     }
 };
 
-const today = () => moment().format('YYYY-MM-DD');
+function getTodayTime () {
+    return moment(moment().format('YYYY-MM-DD')).toDate();
+}
 
 const calculateRelevance = (
     retweet_count,
