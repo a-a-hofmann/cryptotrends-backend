@@ -16,7 +16,7 @@ function getRandomScore() {
 const symbols = ['BTC', 'ETH', 'LTC', 'BCH'];
 
 const dates = [];
-for (let i = 0; i < 28; i++) {
+for (let i = 0; i < 11; i++) {
 	const dateFrom = moment(moment().subtract(i, 'd').format('YYYY-MM-DD')).toDate();	
 	dates.push(dateFrom);
 }
