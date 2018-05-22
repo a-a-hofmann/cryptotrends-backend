@@ -11,4 +11,4 @@ module.exports = class Candle {
         this.volume = data[5];
         this.symbol = symbol;
     }
-}
+};

@@ -28,9 +28,3 @@ const self = module.exports = {
         });
     }
 };
-
-const logResults = (text, score, magnitude) => {
-    console.log(`Text: ${text}`);
-    console.log(`Sentiment score: ${score}`);
-    console.log(`Sentiment magnitude: ${magnitude}`);
-};

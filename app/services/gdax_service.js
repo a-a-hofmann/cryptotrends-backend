@@ -83,4 +83,4 @@ module.exports = {
 
         return Promise.all(timeseries);
     }
-}
+};
