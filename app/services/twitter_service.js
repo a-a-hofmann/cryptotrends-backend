@@ -1,5 +1,5 @@
 const Twit = require('twit');
-const TWITTER_KEY = JSON.parse(process.env.TWITTER_APPLICATION_CREDENTIALS);
+const TWITTER_KEY = process.env.TWITTER_APPLICATION_CREDENTIALS;
 const {TAGS, TWEET_LENGTH_THRESHOLD} = require('../utils/Constants');
 const {analyze} = require('./sentiment_service');
 const chalk = require('chalk');
