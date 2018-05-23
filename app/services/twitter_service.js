@@ -40,7 +40,7 @@ module.exports = {
 
                 const tweetBlob = tweetsForSymbol
                     .map(tweet => tweet.text)
-                    .reduce((tweet1, tweet2) => tweet1 + '\n' + tweet2);
+                    .reduce((doc, tweet) => doc + '\n' + tweet);
                 console.log("Starting analysis for symbol: " + symbol);
                 console.log("Analyzing " + tweetsForSymbol.length + " tweets.\n" + tweetBlob.length / 1000 + " text records.");
                 const analysisResult = await on(analyze(tweetBlob).then(result => {
