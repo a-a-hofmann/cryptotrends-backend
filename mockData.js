@@ -21,7 +21,7 @@ for (let i = 0; i < 11; i++) {
 	dates.push(dateFrom);
 }
 
-MongoClient.connect('mongodb://localhost:27017/crypto-trends', (err, db) => {
+MongoClient.connect(process.env.MONGODB_URI, (err, db) => {
 	if (err) throw err;
 
 	promises = [];
