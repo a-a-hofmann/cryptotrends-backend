@@ -9,7 +9,6 @@ const port = process.env.PORT || 8000;
 const app = express();
 
 app.use(bodyParser.json());
-
 app.use(cors());
 
 // init database
