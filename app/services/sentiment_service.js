@@ -1,5 +1,6 @@
 const language = require('@google-cloud/language');
-const client = new language.LanguageServiceClient();
+const GOOGLE_CREDENTIALS = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+const client = new language.LanguageServiceClient({credentials: GOOGLE_CREDENTIALS});
 
 const self = module.exports = {
     analyze: (textRecord) => {
