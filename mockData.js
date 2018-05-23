@@ -16,19 +16,21 @@ function getRandomScore() {
 const symbols = ['BTC', 'ETH', 'LTC', 'BCH'];
 
 const dates = [];
-for (let i = 0; i < 11; i++) {
+for (let i = 0; i < 600; i++) {
 	const dateFrom = moment(moment().subtract(i, 'd').format('YYYY-MM-DD')).toDate();	
 	dates.push(dateFrom);
 }
 
-MongoClient.connect(process.env.MONGODB_URI, (err, db) => {
+MongoClient.connect(process.env.MONGODB_URI, async (err, db) => {
 	if (err) throw err;
+
+	const sentimentCollection = db.collection('sentiment_score');
+	await sentimentCollection.drop();
 
 	promises = [];
 	dates.forEach(date => {
-
 		const data = [];
-			symbols.forEach(symbol => {
+        symbols.forEach(symbol => {
 			data.push({
 				magnitude: randomMagnitude(),
 				score: getRandomScore(),
@@ -38,11 +40,11 @@ MongoClient.connect(process.env.MONGODB_URI, (err, db) => {
 			})
 		});
 
-		promises.push(db.collection('sentiment_score').insertMany(data))
+		promises.push(sentimentCollection.insertMany(data));
 	});
 
 	Promise.all(promises).then(res => {
 		console.log("Done");
 		process.exit()
-	})
+	});
 });
