@@ -1,3 +1,4 @@
+require('dotenv').load();
 const moment = require('moment');
 const MongoClient = require('mongodb').MongoClient;
 
@@ -17,7 +18,7 @@ const symbols = ['BTC', 'ETH', 'LTC', 'BCH'];
 
 const dates = [];
 for (let i = 0; i < 600; i++) {
-	const dateFrom = moment(moment().subtract(i, 'd').format('YYYY-MM-DD')).toDate();	
+	const dateFrom = moment(moment().subtract(i, 'd').format('YYYY-MM-DD')).toDate();
 	dates.push(dateFrom);
 }
 
